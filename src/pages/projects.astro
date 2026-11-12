@@ -3,22 +3,15 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
-import {
-  projectCategories,
-  projects,
-  type ProjectCategory,
-} from "@/data/projects";
+import { projects } from "@/data/projects";
 
 const publicCount = projects.filter(p => p.visibility === "public").length;
 const aiCount = projects.filter(p => p.category === "ai").length;
-
-const byCategory = (category: ProjectCategory) =>
-  projects.filter(project => project.category === category);
 ---
 
 <Layout
   title="项目 | Zhe 的博客"
-  description="Zhe 的个人项目：AI Agent、效率工具与语言学习产品。"
+  description="Zhe 目前对外展示的项目：AgentVault、Football Fans 和 WordMem。"
 >
   <Header />
 
@@ -31,9 +24,7 @@ const byCategory = (category: ProjectCategory) =>
         做过的东西
       </h1>
       <p class="text-muted-foreground mt-4 max-w-2xl leading-7">
-        这里是我参与或独立完成的项目，大部分集中在 AI Agent 和效率工具。
-        它们背后是我长期关注的三个方向：工程、创业/直播，以及 Agent
-        的体验与安全。
+        这里是我目前对外展示的三个项目。其他还在进行中的项目，等稳定后再放上来。
       </p>
 
       <div class="mt-6 flex flex-wrap gap-3">
@@ -58,38 +49,13 @@ const byCategory = (category: ProjectCategory) =>
       </div>
     </section>
 
-    {
-      projectCategories.map(category => {
-        const items = byCategory(category.id);
-        if (items.length === 0) return null;
+    <section class="py-8">
+      <div class="grid items-stretch gap-5 lg:grid-cols-2">
+        {projects.map(project => <ProjectCard project={project} />)}
+      </div>
+    </section>
 
-        return (
-          <section class="border-border border-b py-10 last:border-0">
-            <div class="mb-6 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <h2 class="text-2xl font-semibold tracking-tight">
-                  {category.label}
-                </h2>
-                <p class="text-muted-foreground mt-1 text-sm">
-                  {category.description}
-                </p>
-              </div>
-              <span class="text-muted-foreground text-xs">
-                {items.length} 个项目
-              </span>
-            </div>
-
-            <div class="grid items-stretch gap-5 lg:grid-cols-2">
-              {items.map(project => (
-                <ProjectCard project={project} />
-              ))}
-            </div>
-          </section>
-        );
-      })
-    }
-
-    <section class="py-10">
+    <section class="pb-10">
       <div
         class="border-border bg-muted/40 rounded-2xl border p-6 sm:flex sm:items-center sm:justify-between sm:p-8"
       >
