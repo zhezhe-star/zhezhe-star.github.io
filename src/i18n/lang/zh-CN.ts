@@ -31,7 +31,7 @@ export default {
   },
   home: {
     socialLinks: "社交链接",
-    featured: "精选",
+    featured: "精选文章",
     recentPosts: "最新文章",
     allPosts: "全部文章",
     featuredProjects: "精选项目",
