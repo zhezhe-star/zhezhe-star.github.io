@@ -9,9 +9,11 @@ import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
 import Card from "@/components/Card.astro";
 import LinkButton from "@/components/LinkButton.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
+import { featuredProjects } from "@/data/projects";
 
 const { socials, posts: postsConfig } = config;
 
@@ -52,9 +54,18 @@ const homePath = getRelativeLocaleUrl(locale, "");
         <span class="sr-only">RSS Feed</span>
       </a>
 
-      <p>这里是我的个人空间，用来记录代码、产品思考和一些生活碎片。</p>
+      <p>
+        这里是我的个人空间：一边放我做过的东西，一边写代码、产品思考和一些生活碎片。
+      </p>
       <p class="mt-2">
-        可以从下面的文章开始看，或者去{" "}
+        可以先看看我的{" "}
+        <LinkButton
+          class="hover:text-accent underline decoration-dashed underline-offset-4"
+          href={getRelativeLocaleUrl(locale, "projects")}
+        >
+          项目
+        </LinkButton>{" "}
+        和最近写的文章，也可以去{" "}
         <LinkButton
           class="hover:text-accent underline decoration-dashed underline-offset-4"
           href={getRelativeLocaleUrl(locale, "about")}
@@ -74,6 +85,38 @@ const homePath = getRelativeLocaleUrl(locale, "");
         )
       }
     </section>
+
+    {
+      featuredProjects.length > 0 && (
+        <section
+          id="featured-projects"
+          class="border-border border-b pt-12 pb-8"
+        >
+          <div class="flex items-end justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-semibold tracking-wide">
+                {t.home.featuredProjects}
+              </h2>
+              <p class="text-muted-foreground mt-1 text-sm">
+                AI Agent、效率工具和语言学习产品。
+              </p>
+            </div>
+            <LinkButton
+              class="hover:text-accent shrink-0 text-sm"
+              href={getRelativeLocaleUrl(locale, "projects")}
+            >
+              {t.home.allProjects} →
+            </LinkButton>
+          </div>
+
+          <div class="mt-6 grid items-stretch gap-5 md:grid-cols-2">
+            {featuredProjects.map(project => (
+              <ProjectCard project={project} compact />
+            ))}
+          </div>
+        </section>
+      )
+    }
 
     {
       featuredPosts.length > 0 && (

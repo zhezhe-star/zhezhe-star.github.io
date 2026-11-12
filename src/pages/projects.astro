@@ -1,0 +1,114 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import {
+  projectCategories,
+  projects,
+  type ProjectCategory,
+} from "@/data/projects";
+
+const publicCount = projects.filter(p => p.visibility === "public").length;
+const aiCount = projects.filter(p => p.category === "ai").length;
+
+const byCategory = (category: ProjectCategory) =>
+  projects.filter(project => project.category === category);
+---
+
+<Layout
+  title="项目 | Zhe 的博客"
+  description="Zhe 的个人项目：AI Agent、效率工具与语言学习产品。"
+>
+  <Header />
+
+  <main id="main-content" class="app-layout my-1">
+    <section class="border-border border-b pt-8 pb-8">
+      <p class="text-accent text-xs font-semibold tracking-[0.18em] uppercase">
+        Personal Projects
+      </p>
+      <h1 class="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
+        做过的东西
+      </h1>
+      <p class="text-muted-foreground mt-4 max-w-2xl leading-7">
+        这里是我参与或独立完成的项目，主要围绕 AI Agent、效率工具和语言学习。
+        每个项目都尽量写清楚它解决什么问题、核心亮点是什么，以及现在能不能访问。
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <span
+          class="border-border bg-background rounded-full border px-3.5 py-1.5 text-xs"
+        >
+          <strong class="text-accent font-semibold">{projects.length}</strong>
+          个项目
+        </span>
+        <span
+          class="border-border bg-background rounded-full border px-3.5 py-1.5 text-xs"
+        >
+          <strong class="text-accent font-semibold">{publicCount}</strong>
+          个开源
+        </span>
+        <span
+          class="border-border bg-background rounded-full border px-3.5 py-1.5 text-xs"
+        >
+          <strong class="text-accent font-semibold">{aiCount}</strong>
+          个 AI / Agent 方向
+        </span>
+      </div>
+    </section>
+
+    {
+      projectCategories.map(category => {
+        const items = byCategory(category.id);
+        if (items.length === 0) return null;
+
+        return (
+          <section class="border-border border-b py-10 last:border-0">
+            <div class="mb-6 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 class="text-2xl font-semibold tracking-tight">
+                  {category.label}
+                </h2>
+                <p class="text-muted-foreground mt-1 text-sm">
+                  {category.description}
+                </p>
+              </div>
+              <span class="text-muted-foreground text-xs">
+                {items.length} 个项目
+              </span>
+            </div>
+
+            <div class="grid items-stretch gap-5 lg:grid-cols-2">
+              {items.map(project => (
+                <ProjectCard project={project} />
+              ))}
+            </div>
+          </section>
+        );
+      })
+    }
+
+    <section class="py-10">
+      <div
+        class="border-border bg-muted/40 rounded-2xl border p-6 sm:flex sm:items-center sm:justify-between sm:p-8"
+      >
+        <div>
+          <h2 class="text-xl font-semibold">想聊某个项目？</h2>
+          <p class="text-muted-foreground mt-2 text-sm leading-6">
+            对项目细节、实现方式或合作感兴趣，可以在 GitHub 上找到我。
+          </p>
+        </div>
+        <a
+          href="https://github.com/zhezhe-star"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-accent text-accent-foreground mt-4 inline-flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium sm:mt-0"
+        >
+          GitHub ↗
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

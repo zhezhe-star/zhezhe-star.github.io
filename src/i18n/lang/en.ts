@@ -4,6 +4,7 @@ export default {
   nav: {
     home: "Home",
     posts: "Posts",
+    projects: "Projects",
     tags: "Tags",
     about: "About",
     archives: "Archives",
@@ -33,6 +34,8 @@ export default {
     featured: "Featured",
     recentPosts: "Recent Posts",
     allPosts: "All Posts",
+    featuredProjects: "Featured Projects",
+    allProjects: "All Projects",
   },
   footer: {
     copyright: "Copyright",

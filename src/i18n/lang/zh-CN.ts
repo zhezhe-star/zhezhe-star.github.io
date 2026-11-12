@@ -4,6 +4,7 @@ export default {
   nav: {
     home: "首页",
     posts: "文章",
+    projects: "项目",
     tags: "标签",
     about: "关于",
     archives: "归档",
@@ -33,6 +34,8 @@ export default {
     featured: "精选",
     recentPosts: "最新文章",
     allPosts: "全部文章",
+    featuredProjects: "精选项目",
+    allProjects: "全部项目",
   },
   footer: {
     copyright: "版权所有",

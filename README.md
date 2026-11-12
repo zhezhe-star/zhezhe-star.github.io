@@ -51,6 +51,9 @@ tags:
 
 - 站点信息、社交链接：`astro-paper.config.ts`
 - 首页欢迎语：`src/pages/index.astro`
+- 项目列表与亮点：`src/data/projects.ts`
+- 项目封面：`public/projects/`
+- 项目页：`src/pages/projects.astro`
 - 关于页面：`src/content/pages/about.md`
 - 主题色：`src/styles/theme.css`
 - 中英文案：`src/i18n/lang/zh-CN.ts`
