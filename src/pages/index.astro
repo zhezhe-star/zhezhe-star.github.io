@@ -25,6 +25,24 @@ const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
+
+const pillars = [
+  {
+    index: "01",
+    title: "三寸工程师",
+    body: "对“三寸”有些认知，关注技术里的深度与分寸。",
+  },
+  {
+    index: "02",
+    title: "创业 × 直播",
+    body: "能做创业，但以稳定直播为主；既能从 0 到 1，也能长期经营。",
+  },
+  {
+    index: "03",
+    title: "AI Agent",
+    body: "非常关注 Agent 的体验与安全：好不好用，以及能不能放心用。",
+  },
+];
 ---
 
 <Layout>
@@ -36,8 +54,8 @@ const homePath = getRelativeLocaleUrl(locale, "");
     class="app-layout my-1"
   >
     <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        你好，我是 Zhe 👋
+      <h1 class="my-4 inline-block text-3xl font-bold sm:my-8 sm:text-5xl">
+        我是 Zhe，<span class="block sm:inline">一个三寸工程师 👋</span>
       </h1>{" "}
       <a
         target="_blank"
@@ -55,17 +73,25 @@ const homePath = getRelativeLocaleUrl(locale, "");
       </a>
 
       <p>
-        这里是我的个人空间：一边放我做过的东西，一边写代码、产品思考和一些生活碎片。
+        对“三寸”有些认知。能做创业，但以稳定直播为主；现在非常关注 AI Agent
+        的体验和安全。
       </p>
       <p class="mt-2">
-        可以先看看我的{" "}
+        这里放我做过的东西，也放我写下的文章。可以从{" "}
         <LinkButton
           class="hover:text-accent underline decoration-dashed underline-offset-4"
           href={getRelativeLocaleUrl(locale, "projects")}
         >
           项目
         </LinkButton>{" "}
-        和最近写的文章，也可以去{" "}
+        或{" "}
+        <LinkButton
+          class="hover:text-accent underline decoration-dashed underline-offset-4"
+          href={getRelativeLocaleUrl(locale, "posts")}
+        >
+          文章
+        </LinkButton>{" "}
+        开始，也可以去{" "}
         <LinkButton
           class="hover:text-accent underline decoration-dashed underline-offset-4"
           href={getRelativeLocaleUrl(locale, "about")}
@@ -84,6 +110,24 @@ const homePath = getRelativeLocaleUrl(locale, "");
           </div>
         )
       }
+    </section>
+
+    <section id="focus" class="border-border border-b py-8">
+      <div class="grid gap-4 sm:grid-cols-3">
+        {
+          pillars.map(pillar => (
+            <div class="border-border bg-background rounded-xl border p-5">
+              <div class="text-accent text-[11px] font-semibold tracking-[0.16em]">
+                {pillar.index}
+              </div>
+              <h2 class="mt-2 text-base font-semibold">{pillar.title}</h2>
+              <p class="text-muted-foreground mt-2 text-sm leading-6">
+                {pillar.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
     </section>
 
     {

@@ -3,8 +3,9 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://zhezhe-star.github.io/",
-    title: "Zhe 的博客",
-    description: "记录代码、产品与生活里的一些想法。",
+    title: "Zhe · 三寸工程师",
+    description:
+      "三寸工程师。做创业，也做稳定直播；关注 AI Agent 的体验与安全。",
     author: "Zhe",
     profile: "https://github.com/zhezhe-star",
     ogImage: "default-og.jpg",
