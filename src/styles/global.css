@@ -23,15 +23,15 @@
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
-}
-
-@utility wide-layout {
-  @apply mx-auto w-full px-4 sm:px-6 lg:px-8;
+  @apply max-w-6xl;
 }
 
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply max-w-app mx-auto w-full px-4 sm:px-6 lg:px-8;
+}
+
+@utility max-w-prose {
+  @apply max-w-[65ch];
 }
 
 @utility active-nav {

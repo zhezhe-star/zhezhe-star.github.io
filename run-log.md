@@ -238,3 +238,24 @@
 ### [2026-11-24T20:03:00+08:00] milestone
 - **M3/M4 完成**：项目页三列铺满、封面性能优化、Web Guidelines 最小修复全部上线。
 - **剩余**：`T006` 桌面宽度统一策略（owner choice）；`T010` 最终浏览器验收（owner gate）。
+
+### [2026-11-24T20:13:02+08:00] decision
+- 老板拍板 `T006` 采用方案 B：全站外层容器统一 1152px，文章正文在 prose 内部使用 `65ch` 约束。
+- **实施口径**：
+  1. 将现有 `app-layout` 的宽度从 `max-w-3xl` 调整为 `max-w-6xl`，保留响应式 padding。
+  2. 单篇文章正文从 `max-w-app` 改用语义化的 `max-w-prose`，固定为 `65ch`。
+  3. TOC 悬浮定位继续引用 `max-w-app`，因为其注释依赖当前主容器宽度，所以同步继承新统一值。
+  4. 项目页已有 `wide-layout max-w-6xl` 与新 `app-layout` 合并为同一套 `max-w-6xl` 体系。
+- **影响范围**：所有页面外层容器、单篇文章正文列宽、TOC 定位；不改项目数据与功能代码。
+
+### [2026-11-24T20:16:00+08:00] evidence
+- `T006` 方案 B 实施证据：
+  - 统一外层容器：`app-layout` 改为 `max-w-6xl`（1152px）+ 响应式 padding；项目页删除双轨 `wide-layout`，改用同一 `app-layout`。
+  - 文章正文：单篇 post 的 `.app-prose` 外层改用新 `max-w-prose`（65ch）。
+  - 构建产物 CSS：`.app-layout{max-width:var(--container-6xl)}`、`.max-w-prose{max-width:65ch}`。
+  - 本地 lint、format:check、build 全部通过。
+  - 390/768/1280/1440/1920 截图：`/tmp/t006-home-*.png`、`/tmp/t006-projects-*.png`、`/tmp/t006-post-*.png`、`/tmp/t006-about-*.png`。
+  - 大屏首页骨架变宽，正文页正文仍为窄列居中；移动端未发现横向滚动。
+
+### [2026-11-24T20:16:00+08:00] milestone
+- **M2 完成**：全站桌面宽度策略按方案 B 落地。

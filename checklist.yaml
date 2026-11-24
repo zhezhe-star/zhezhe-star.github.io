@@ -94,7 +94,7 @@ tasks:
   - id: T006
     milestone: M2
     title: 确认并实施全站桌面宽度策略
-    status: pending
+    status: complete
     risk: normal
     depends_on: [T005]
     verify: "npx pnpm@latest run build"
@@ -103,8 +103,8 @@ tasks:
       2. 按决策更新对应布局，不引入移动端横向滚动。
       3. 本地 390/768/1280/1440/1920 截图通过。
       4. lint、format:check、build、部署均通过。
-    evidence: ""
-    note: "blocked-on-owner：等待老板确认桌面宽度策略。"
+    evidence: "2026-11-24T20:16:00+08:00 / 2026-11-24T20:16:00+08:00 / 2026-11-24T20:16:00+08:00 / 2026-11-24T20:16:00+08:00"
+    note: "方案 B 已实施：外层 max-w-6xl，正文 max-w-prose（65ch）。"
     owner_gate: true
 
   - id: T007
