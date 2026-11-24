@@ -110,7 +110,7 @@ tasks:
   - id: T007
     milestone: M3
     title: 确定 3 项目大屏网格视觉策略
-    status: pending
+    status: in_progress
     risk: normal
     depends_on: [T006]
     verify: "npx pnpm@latest run build"

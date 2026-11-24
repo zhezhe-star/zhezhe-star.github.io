@@ -175,3 +175,16 @@
   3. 开始执行不依赖老板决策的 `T008`、`T009`；`T006`、`T007` 保持 pending 等 owner 决策。
   4. 后续高风险操作（新增依赖等）仍按决策节点 3 先停下审批。
 
+
+### [2026-11-24T19:54:36+08:00] decision
+- 老板在 Orca item 上拍板：`T007` 定案为「大屏 3 个项目改三列铺满」，直接实施。
+- **决策**：`/projects/` 桌面网格从两列改为三列（`md:grid-cols-2 lg:grid-cols-3`），小步提交并验证。
+- `T008`、`T009` 继续执行；`T006` 先调研业界最佳实践，调研结论返回老板选择。
+
+### [2026-11-24T19:54:36+08:00] decision
+- **T006 桌面宽度调研结论（带来源）**：
+  1. WCAG 2.0 §4.8 Visual Presentation（AAA）：文本块宽度不超过 80 字符，中日韩不超过 40 字符。来源：https://www.w3.org/TR/WCAG20/#visual-audio-contrast-visual-presentation
+  2. Practical Typography（Matthew Butterick）：平均行长建议 45–90 字符（含空格）。来源：https://practicaltypography.com/line-length.html
+  3. Tailwind Typography 官方插件 v0.5.20 源码：`.prose` 默认 `maxWidth: 65ch`，即生态默认做法是「外层容器自由 + 正文内部 65ch 约束」。来源：https://github.com/tailwindlabs/tailwindcss/blob/main/packages/@tailwindcss/typography（`src/styles.js`）
+- **结论**：业界证据明确支持「统一外层容器 + 正文内部 65ch 约束」的混合模式；单一统一 1152px 会让文章正文行长超过 90 字符，不符合上述排版与可访问性建议。
+- **按老板指示停下**：将两个候选方案（A 纯统一宽度 / B 统一容器+正文 65ch）转老板选择，`T006` 保持 pending。
