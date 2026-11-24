@@ -110,7 +110,7 @@ tasks:
   - id: T007
     milestone: M3
     title: 确定 3 项目大屏网格视觉策略
-    status: in_progress
+    status: complete
     risk: normal
     depends_on: [T006]
     verify: "npx pnpm@latest run build"
@@ -119,14 +119,14 @@ tasks:
       2. 实施后 /projects/ 在 1280/1440/1920 下无空位突兀感或空位被有意处理。
       3. 移动端与平板布局正常。
       4. lint、format:check、build、部署均通过。
-    evidence: ""
+    evidence: "2026-11-24T20:01:10+08:00 / 2026-11-24T20:01:30+08:00 / 2026-11-24T20:01:45+08:00"
     note: "blocked-on-owner：先等老板选视觉方案，再实施。"
     owner_gate: true
 
   - id: T008
     milestone: M4
     title: 压缩项目封面并启用懒加载属性
-    status: in_progress
+    status: complete
     risk: low
     depends_on: [T007]
     verify: "grep -nE 'loading=\"lazy\"|decoding=\"async\"' src/components/ProjectCard.astro"
@@ -135,13 +135,13 @@ tasks:
       2. ProjectCard 图片输出包含 loading=\"lazy\" 与 decoding=\"async\"。
       3. 首页与项目页截图无明显质量退化。
       4. lint、format:check、build、部署均通过。
-    evidence: ""
+    evidence: "2026-11-24T19:58:59+08:00 / 2026-11-24T20:00:05+08:00 / 2026-11-24T20:01:35+08:00 / 2026-11-24T20:02:20+08:00"
     note: ""
 
   - id: T009
     milestone: M4
     title: Web Interface Guidelines 细项复查
-    status: in_progress
+    status: complete
     risk: normal
     depends_on: [T008]
     verify: "npx pnpm@latest run lint"
@@ -151,7 +151,7 @@ tasks:
       3. 检查移动端触控目标，交互目标不小于 44px 或有足够命中区域。
       4. 对发现的问题逐项修复或记录明确接受理由。
       5. lint、format:check、build、部署均通过。
-    evidence: ""
+    evidence: "2026-11-24T20:00:42+08:00 / 2026-11-24T20:00:55+08:00 / 2026-11-24T20:01:35+08:00 / 2026-11-24T20:02:20+08:00"
     note: ""
 
   - id: T010

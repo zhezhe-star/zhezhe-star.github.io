@@ -188,3 +188,53 @@
   3. Tailwind Typography 官方插件 v0.5.20 源码：`.prose` 默认 `maxWidth: 65ch`，即生态默认做法是「外层容器自由 + 正文内部 65ch 约束」。来源：https://github.com/tailwindlabs/tailwindcss/blob/main/packages/@tailwindcss/typography（`src/styles.js`）
 - **结论**：业界证据明确支持「统一外层容器 + 正文内部 65ch 约束」的混合模式；单一统一 1152px 会让文章正文行长超过 90 字符，不符合上述排版与可访问性建议。
 - **按老板指示停下**：将两个候选方案（A 纯统一宽度 / B 统一容器+正文 65ch）转老板选择，`T006` 保持 pending。
+
+### [2026-11-24T20:00:05+08:00] evidence
+- `T008` 封面优化产物与实现：
+  - 生成 1200×750 q90 WebP：AgentVault 21 KB（原 145 KB）、Football Fans 37 KB（原 183 KB）、WordMem 21 KB（原 164 KB），合计 79 KB（原 492 KB，降低 83.9%）。
+  - 原图保留在 `public/projects/*.png`，新数据模型增加 `optimizedCover`，当前 UI 使用 q90 WebP。
+  - `ProjectCard` 输出 `loading="lazy"` 与 `decoding="async"`，并加 `motion-reduce:transition-none` / `motion-reduce:group-hover:scale-100`。
+  - 本地构建产物引用 q90 WebP；首页与 `/projects/` 各 3 张图均带 `loading="lazy"`。
+  - 1440/1920 截图：`/tmp/t008-projects-1440.png`、`/tmp/t008-projects-1920.png`、`/tmp/t008-home-1440.png`、`/tmp/t008-home-1920.png`；未见明显视觉退化。
+
+### [2026-11-24T20:00:42+08:00] decision
+- `T009` Web Interface Guidelines 复查与最小修复：
+  - 已有基础符合项：全局可见 focus outline（`global.css`）；文章页 lightbox、PostToc 已尊重 `prefers-reduced-motion`；Header 主题切换图标为 48px（移动端），导航与按钮主体可点区域正常；文本排版由主题与 prose 控制。
+  - 发现并修复 3 处非必要动效：社交图标 hover rotate、分享图标 hover rotate、主题切换图标 transition。统一追加 `motion-reduce:hover:rotate-0` 或 `motion-reduce:transition-none`。
+  - 接受项：Footer/项目卡中的普通标签为非交互元素；Pagefind 组件自身样式暂不改动；当前文本对比度来自主题设计，无低对比告警。
+
+### [2026-11-24T20:00:55+08:00] evidence
+- `T009` 静态检查：ESLint、Prettier、Astro build 通过。
+- 变更文件：`Socials.astro`、`ShareLinks.astro`、`Header.astro`；构建 CSS 包含 `motion-reduce:hover:rotate-0` 与 `motion-reduce:transition-none`。
+
+### [2026-11-24T20:01:10+08:00] checkpoint
+- commit：`58db798 fix(projects): use three-column grid on large screens`
+- 内容：`/projects/` 大屏网格改 `sm:grid-cols-2 lg:grid-cols-3`。
+- 本地验证：1280/1440/1920 三列铺满截图，移动端单列正常。
+
+### [2026-11-24T20:01:30+08:00] publish
+- 分支：`main`
+- 提交：`58db798`
+- 推送：`origin/main`
+- workflow：`45388692449`
+- 结果：`success`，GitHub Pages 部署成功。
+- 线上 HTML 包含 `sm:grid-cols-2 lg:grid-cols-3`。
+
+### [2026-11-24T20:01:35+08:00] publish
+- 分支：`main`
+- 提交：`0670042 perf(a11y): optimize covers and respect reduced motion`、`845544a style: format socials`
+- 推送：`origin/main`
+- workflow：`45389562570`（最终成功；`45389497462` 因同分支新 push 被 cancelled）
+- 结果：GitHub Pages 部署成功。
+
+### [2026-11-24T20:02:20+08:00] evidence
+- 线上复验：
+  - `/` 与 `/projects/` 均 200。
+  - `/projects/` 引用 3 个 q90 WebP；首页/项目页各 3 张图带 `loading="lazy"`。
+  - 线上资源大小：AgentVault 21,012 B、Football Fans 38,246 B、WordMem 8,067 B。
+  - 部署 CSS 包含 reduced motion 修复类。
+- `T007`、`T008`、`T009` 完成；`T006` 保持 pending，等老板在宽度方案 A/B 中选择。
+
+### [2026-11-24T20:03:00+08:00] milestone
+- **M3/M4 完成**：项目页三列铺满、封面性能优化、Web Guidelines 最小修复全部上线。
+- **剩余**：`T006` 桌面宽度统一策略（owner choice）；`T010` 最终浏览器验收（owner gate）。
