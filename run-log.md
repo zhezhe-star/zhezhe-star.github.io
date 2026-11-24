@@ -259,3 +259,19 @@
 
 ### [2026-11-24T20:16:00+08:00] milestone
 - **M2 完成**：全站桌面宽度策略按方案 B 落地。
+
+### [2026-11-24T20:19:07+08:00] evidence
+- `T010` 部署后线上复验（真实 viewport 截图 + curl）：
+  - HTTP：`/`、`/projects/`、`/posts/hello-world/`、`/about/` 全部 200。
+  - 部署 CSS：`.app-layout{max-width:var(--container-6xl)}`；`.max-w-prose{max-width:65ch}`。
+  - 线上单篇正文容器：`w-full app-prose max-w-prose`。
+  - workflow：`45391860276` `feat(layout): unify desktop container and prose width`，结论 `success`。
+  - 真实 1440/1920 截图：
+    - `/tmp/t010-live-home-1440.png`
+    - `/tmp/t010-live-home-1920.png`
+    - `/tmp/t010-live-projects-1440.png`
+    - `/tmp/t010-live-projects-1920.png`
+    - `/tmp/t010-live-post-1440.png`
+    - `/tmp/t010-live-post-1920.png`
+- 结果：首页与项目页外层骨架 1152px；单篇文章正文保持 65ch 居中；未见移动端横向滚动问题。
+- **owner gate**：技术证据已齐，等待老板确认宽度 issue 可关闭后才能把 `T010` 标 complete。
