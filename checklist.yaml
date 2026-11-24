@@ -157,7 +157,7 @@ tasks:
   - id: T010
     milestone: M5
     title: 真实 1440/1920 浏览器复验并完成宽度 issue 验收
-    status: pending
+    status: complete
     risk: normal
     depends_on: [T006, T007, T008, T009]
     verify: "curl -I https://zhezhe-star.github.io/projects/"
@@ -166,6 +166,6 @@ tasks:
       2. 首页与 /projects/ 返回 200。
       3. GitHub Pages 最新 workflow 为 success。
       4. 老板明确确认宽度 issue 可关闭。
-    evidence: ""
-    note: "blocked-on-owner：最终验收需要老板确认。"
+    evidence: "2026-11-24T20:24:02+08:00 / 2026-11-24T20:24:02+08:00"
+    note: "老板最终验收通过（原话：验收通过，关闭）。"
     owner_gate: true
