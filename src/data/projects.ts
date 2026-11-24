@@ -15,6 +15,7 @@ export interface Project {
   visibility: ProjectVisibility;
   year: string;
   cover: string;
+  optimizedCover: string;
   coverAlt: string;
   highlights: string[];
   tags: string[];
@@ -34,6 +35,7 @@ export const projects: Project[] = [
     visibility: "public",
     year: "2026",
     cover: "/projects/agentvault.png",
+    optimizedCover: "/projects/agentvault-q90.webp",
     coverAlt: "AgentVault 项目封面",
     highlights: [
       "本地优先加密存储，密钥不落在明文 .env 或配置文件里",
@@ -60,6 +62,7 @@ export const projects: Project[] = [
     visibility: "private",
     year: "2026",
     cover: "/projects/football-fans.png",
+    optimizedCover: "/projects/football-fans-q90.webp",
     coverAlt: "Football Fans 小程序界面截图",
     highlights: [
       "赛程、球队、球员数据定时同步",
@@ -82,6 +85,7 @@ export const projects: Project[] = [
     visibility: "public",
     year: "2026",
     cover: "/projects/wordmem.png",
+    optimizedCover: "/projects/wordmem-q90.webp",
     coverAlt: "WordMem 项目封面",
     highlights: [
       "支持 JSON / TXT 文件导入词库",
