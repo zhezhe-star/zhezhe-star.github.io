@@ -26,6 +26,10 @@
   @apply max-w-3xl;
 }
 
+@utility wide-layout {
+  @apply mx-auto w-full px-4 sm:px-6 lg:px-8;
+}
+
 @utility app-layout {
   @apply max-w-app mx-auto w-full px-4;
 }
