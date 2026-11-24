@@ -1,0 +1,171 @@
+# checklist.yaml — 个人博客 Orca 任务清单
+#
+# 规则：
+# - 只追加，不改删旧任务。新工作追加新条目；废弃的任务把 status 改为 archived 并注明原因。
+# - 状态机：pending → in_progress → complete / failed / archived
+#   - failed / archived 是终态；failed 之后若要重试，追加一条新任务并在 note 里引用旧 id。
+# - 每条任务的 acceptance 必须是可执行的验收标准（命令/测试/可观察结果），不许写“工作正常”这类空话。
+# - evidence 指向 run-log.md 中的条目（用时间戳引用），任务标 complete 前必须填。
+# - 压缩/重启后本文件与 plan.md、run-log.md 一起必读。
+# - 可选字段：
+#   risk: low|normal|high   -> high 任务执行前触发决策节点 3
+#   depends_on: [T001]      -> 依赖任务，未完成时不得开始
+#   verify: "<命令>"        -> 本任务最快能暴露问题的验证命令（全量套件在里程碑处跑）
+#   owner_gate: true        -> 依赖老板决策或验收，未确认前不得继续实施
+
+meta:
+  created: "2026-11-24T18:02:31+08:00"
+  circuit_breaker_n: 3        # 与 plan.md 第 7 节一致
+
+tasks:
+  - id: T001
+    milestone: M1
+    title: 搭建 GitHub Pages 个人博客
+    status: complete
+    risk: normal
+    depends_on: []
+    verify: "curl -I https://zhezhe-star.github.io/"
+    acceptance: |
+      1. Astro + AstroPaper 站点本地构建成功。
+      2. GitHub 仓库 zhezhe-star/zhezhe-star.github.io 创建成功。
+      3. GitHub Pages workflow 成功，https://zhezhe-star.github.io/ 返回 200。
+    evidence: "2026-11-12T18:44:30+08:00 / 2026-11-12T18:45:50+08:00"
+    note: "历史任务补录。对应 commit caafa5f，workflow 43203096829。"
+
+  - id: T002
+    milestone: M1
+    title: 建立个人项目与分享文章两类内容结构
+    status: complete
+    risk: normal
+    depends_on: [T001]
+    verify: "grep -E '项目|文章' dist/index.html"
+    acceptance: |
+      1. 新增 /projects/ 项目展示页。
+      2. 首页包含精选项目、精选文章、最新文章入口。
+      3. 顶部导航提供项目、文章、关于入口。
+      4. 构建与部署成功。
+    evidence: "2026-11-12T18:53:52+08:00 / 2026-11-12T18:54:35+08:00 / 2026-11-12T18:55:52+08:00 / 2026-11-12T18:56:35+08:00"
+    note: "历史任务补录。对应 commits 898f219、8e3a19d，workflows 43204394146、43204684613。"
+
+  - id: T003
+    milestone: M1
+    title: 落实三方向个人定位
+    status: complete
+    risk: normal
+    depends_on: [T001]
+    verify: "grep -E '三寸工程师|AI Agent|稳定直播' dist/index.html"
+    acceptance: |
+      1. 站点标题包含“Zhe · 三寸工程师”。
+      2. 首屏与关于页表达三寸工程师、创业与稳定直播、AI Agent 体验安全三个方向。
+      3. 构建部署成功。
+    evidence: "2026-11-12T18:59:35+08:00 / 2026-11-12T19:00:45+08:00"
+    note: "历史任务补录。对应 commit 532e925，workflow 43205203160。“三寸”和“稳定直播”仍按老板原话保留。"
+
+  - id: T004
+    milestone: M1
+    title: 对外项目收敛为 3 个
+    status: complete
+    risk: normal
+    depends_on: [T002]
+    verify: "curl -s https://zhezhe-star.github.io/projects/ | grep -E 'Football Fans|AgentVault|WordMem'"
+    acceptance: |
+      1. /projects/ 只包含 Football Fans、AgentVault、WordMem。
+      2. 其他项目数据与封面从站点产物中移除。
+      3. 移除项目封面线上返回 404。
+      4. 构建部署成功。
+    evidence: "2026-11-12T19:02:54+08:00 / 2026-11-12T19:03:45+08:00 / 2026-11-24T17:38:22+08:00"
+    note: "历史任务补录。对应 commit aab25f4，workflow 43205708891；evidence 第三项为 2026-11-24 线上复查。"
+
+  - id: T005
+    milestone: M1
+    title: 修复项目页桌面宽度写死问题
+    status: complete
+    risk: normal
+    depends_on: [T002]
+    verify: "grep -n 'wide-layout max-w-6xl' src/pages/projects.astro"
+    acceptance: |
+      1. /projects/ 桌面内容区从 768px 放宽到 1152px。
+      2. 新增响应式 wide-layout padding。
+      3. 本地 1440/1680/1920 截图检查通过。
+      4. lint、format:check、build、GitHub Pages workflow 全部通过。
+    evidence: "2026-11-24T17:17:22+08:00 / 2026-11-24T17:17:28+08:00 / 2026-11-24T17:18:23+08:00 / 2026-11-24T17:16:36+08:00"
+    note: "历史任务补录。对应 commit 0183566，workflow 45363778810。首页/文章页宽度仍未统一，后续由 T006 处理。"
+
+  - id: T006
+    milestone: M2
+    title: 确认并实施全站桌面宽度策略
+    status: pending
+    risk: normal
+    depends_on: [T005]
+    verify: "npx pnpm@latest run build"
+    acceptance: |
+      1. 老板明确选择：全站统一宽度，或分页设定（首页/项目页较宽，文章正文保持可读列宽）。
+      2. 按决策更新对应布局，不引入移动端横向滚动。
+      3. 本地 390/768/1280/1440/1920 截图通过。
+      4. lint、format:check、build、部署均通过。
+    evidence: ""
+    note: "blocked-on-owner：等待老板确认桌面宽度策略。"
+    owner_gate: true
+
+  - id: T007
+    milestone: M3
+    title: 确定 3 项目大屏网格视觉策略
+    status: pending
+    risk: normal
+    depends_on: [T006]
+    verify: "npx pnpm@latest run build"
+    acceptance: |
+      1. 老板在“三列 / 横幅 / 占位卡”三选一中给出决策。
+      2. 实施后 /projects/ 在 1280/1440/1920 下无空位突兀感或空位被有意处理。
+      3. 移动端与平板布局正常。
+      4. lint、format:check、build、部署均通过。
+    evidence: ""
+    note: "blocked-on-owner：先等老板选视觉方案，再实施。"
+    owner_gate: true
+
+  - id: T008
+    milestone: M4
+    title: 压缩项目封面并启用懒加载属性
+    status: in_progress
+    risk: low
+    depends_on: [T007]
+    verify: "grep -nE 'loading=\"lazy\"|decoding=\"async\"' src/components/ProjectCard.astro"
+    acceptance: |
+      1. public/projects/*.png 压缩后保持视觉清晰，记录前后体积。
+      2. ProjectCard 图片输出包含 loading=\"lazy\" 与 decoding=\"async\"。
+      3. 首页与项目页截图无明显质量退化。
+      4. lint、format:check、build、部署均通过。
+    evidence: ""
+    note: ""
+
+  - id: T009
+    milestone: M4
+    title: Web Interface Guidelines 细项复查
+    status: in_progress
+    risk: normal
+    depends_on: [T008]
+    verify: "npx pnpm@latest run lint"
+    acceptance: |
+      1. 复查 prefers-reduced-motion 是否被尊重，动效有降级或确认不需要动效。
+      2. 检查键盘可达、focus ring、遮挡关系。
+      3. 检查移动端触控目标，交互目标不小于 44px 或有足够命中区域。
+      4. 对发现的问题逐项修复或记录明确接受理由。
+      5. lint、format:check、build、部署均通过。
+    evidence: ""
+    note: ""
+
+  - id: T010
+    milestone: M5
+    title: 真实 1440/1920 浏览器复验并完成宽度 issue 验收
+    status: pending
+    risk: normal
+    depends_on: [T006, T007, T008, T009]
+    verify: "curl -I https://zhezhe-star.github.io/projects/"
+    acceptance: |
+      1. 在真实 1440 与 1920 浏览器窗口检查首页、项目页、文章页。
+      2. 首页与 /projects/ 返回 200。
+      3. GitHub Pages 最新 workflow 为 success。
+      4. 老板明确确认宽度 issue 可关闭。
+    evidence: ""
+    note: "blocked-on-owner：最终验收需要老板确认。"
+    owner_gate: true
